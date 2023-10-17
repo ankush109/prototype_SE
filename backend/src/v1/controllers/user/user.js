@@ -24,5 +24,82 @@ const userController = {
       console.log(err, "err");
     }
   },
+  async sendMoney(req, res, next) {
+    const { receiverId, amount, description, currency, paymentMethod } =
+      req.body;
+    const senderId = req.user.id;
+
+    try {
+      const sender = await prisma.user.findUnique({
+        where: { id: senderId },
+        select: {
+          wallet: true,
+        },
+      });
+      const receiver = await prisma.user.findUnique({
+        where: { id: receiverId },
+        select: {
+          wallet: true,
+        },
+      });
+
+      if (!receiver) {
+        return res.status(404).json({ message: "Receiver not found" });
+      }
+
+      if (sender.wallet[0].balance < amount) {
+        return res.status(400).json({ message: "Insufficient balance" });
+      }
+
+      // Perform the money transfer and update wallet balances
+      const timestamp = new Date();
+
+      // Create a single transaction record for the sender and receiver
+      const transaction = await prisma.transaction.create({
+        data: {
+          senderId,
+          receiverId,
+          amount: amount, // Deduct amount from sender
+          timestamp,
+          status: "completed",
+          description,
+          currency,
+          paymentMethod,
+        },
+      });
+
+      // Update sender's and receiver's wallet balances
+      const updatedSenderBalance = sender.wallet[0].balance - amount;
+      const updatedReceiverBalance = receiver.wallet[0].balance + amount;
+      console.log(sender.wallet[0]);
+      console.log(receiverId);
+      console.log(updatedSenderBalance);
+
+      console.log(updatedReceiverBalance);
+
+      await prisma.wallet.update({
+        where: {
+          id: sender.wallet[0].id,
+        },
+        data: {
+          balance: updatedSenderBalance,
+        },
+      });
+
+      await prisma.wallet.update({
+        where: {
+          id: receiver.wallet[0].id,
+        },
+        data: {
+          balance: updatedReceiverBalance,
+        },
+      });
+
+      res.json({ message: "Money sent successfully", transaction });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error });
+    }
+  },
 };
 export default userController;

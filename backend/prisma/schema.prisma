@@ -34,15 +34,14 @@ model Transaction {
   id            String   @id @default(cuid())
   senderId      String
   receiverId    String
-  amount        Float
+  amount        Float // Change to Float
   timestamp     DateTime
   status        String // 'pending', 'completed', etc.
   description   String?
   currency      String // 'USD', 'EUR', etc.
   paymentMethod String // 'credit card', 'PayPal', etc.
-
-  sender   User @relation("sender", fields: [senderId], references: [id])
-  receiver User @relation("receiver", fields: [receiverId], references: [id])
+  sender        User     @relation("sender", fields: [senderId], references: [id])
+  receiver      User     @relation("receiver", fields: [receiverId], references: [id])
 }
 
 model PaymentMethod {

@@ -3,12 +3,12 @@ import { GetUserQuery } from "../api/user";
 
 function Home() {
   const user = GetUserQuery();
-  useEffect(() => {
-    console.log(user.data.name);
-  });
+  // useEffect(() => {
+  //   console.log(user.data.name);
+  // });
   return (
     <div>
-      <div>hello {user.data.name} </div>
+      <div>hello {user?.data?.name} </div>
     </div>
   );
 }

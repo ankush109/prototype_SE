@@ -6,4 +6,5 @@ const router = express.Router();
 
 router.get("/user-details", authMiddleware, userController.userDetails);
 
+router.post("/sendmoney", authMiddleware, userController.sendMoney);
 export default router;
