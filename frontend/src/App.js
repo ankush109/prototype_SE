@@ -5,6 +5,8 @@ import { Toaster, toast, useToasterStore } from "react-hot-toast";
 import { useEffect } from "react";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
+import BankDetails from "./Components/BankDetails";
+import Navbar from "./Components/Navbar";
 
 function App() {
   function isJWTValid() {
@@ -43,10 +45,12 @@ function App() {
         toastOptions={{ duration: 5000 }}
       />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/connectBank" element={<BankDetails />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -3,6 +3,10 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "bank" TEXT NOT NULL,
+    "AccountNumber" TEXT NOT NULL,
+    "AccountHolderName" TEXT NOT NULL,
+    "IFSC" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phonenumber" TEXT NOT NULL,
 

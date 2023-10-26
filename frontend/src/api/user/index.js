@@ -23,6 +23,20 @@ const GetUser = async () => {
   const { data } = await AuthAPI().get("/user/user-details");
   return data;
 };
+const UpdateBankDetails = async (
+  accountNumber,
+  bankName,
+  IFSCcode,
+  accountHolderName
+) => {
+  const { data } = await AuthAPI().put("/user/fillBankDetails", {
+    accountNumber,
+    bankName,
+    IFSCcode,
+    accountHolderName,
+  });
+  return data;
+};
 const GetUserQuery = () =>
   useQuery({
     queryKey: ["user-details"],
@@ -31,4 +45,4 @@ const GetUserQuery = () =>
       return data.message;
     },
   });
-export { GetUserQuery };
+export { GetUserQuery, UpdateBankDetails };

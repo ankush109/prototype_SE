@@ -9,6 +9,54 @@ import { customResponse } from "../../../utils/Response";
 
 const prisma = new PrismaClient();
 const userController = {
+  async fillBankDetails(req, res, next) {
+    try {
+      const { accountNumber, bankName, IFSCcode, accountHolderName } = req.body;
+      const userId = req.user.id;
+
+      // Check if the user exists
+      const user = await prisma.user.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (user) {
+        // Update the user's bank details
+        const updatedUser = await prisma.user.update({
+          where: { id: userId },
+          data: {
+            AccountNumber: accountNumber,
+            bank: bankName,
+            AccountHolderName: accountHolderName,
+            IFSC: IFSCcode,
+          },
+        });
+
+        // You can send a response or handle success here
+        res.status(200).json({
+          success: true,
+          message: "Bank details updated successfully",
+          user: updatedUser,
+        });
+      } else {
+        // Handle the case where the user does not exist
+        res.status(404).json({ success: false, error: "User not found" });
+      }
+    } catch (err) {
+      // Handle any errors that occur during the process
+      console.error(err);
+      res
+        .status(500)
+        .json({
+          success: false,
+          error: "An error occurred while updating bank details",
+        });
+    } finally {
+      // Close the Prisma client connection
+      await prisma.$disconnect();
+    }
+  },
   async userDetails(req, res, next) {
     try {
       // find the user
