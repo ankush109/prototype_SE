@@ -25,7 +25,7 @@ const authMiddleware = async (req, _res, next) => {
         id: decoded,
       },
     });
-    console.log(user);
+
     if (!user) {
       return next(createError.Unauthorized());
     }

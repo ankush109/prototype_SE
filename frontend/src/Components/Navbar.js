@@ -10,18 +10,26 @@ function Navbar() {
       </div>
       <div className="flex items-center gap-10 p-20">
         <div>
-          <h1 className="font-bold">My balance</h1>
+          <Link to="/Balance" className="font-bold">
+            My balance
+          </Link>
         </div>
         <div>
-          <h1 className="font-bold">Send Money</h1>
+          <Link to="/Transfer" className="font-bold">
+            Send Money
+          </Link>
         </div>
         <div>
           <h1 className="font-bold">History</h1>
         </div>
         <div>
-          <Link to="/connectBank" className="font-bold">
-            Connect Bank
-          </Link>
+          {!user?.data?.bank ? (
+            <Link to="/connectBank" className="font-bold">
+              Connect Bank
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
         {user?.data ? (
           <div>

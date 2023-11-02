@@ -7,6 +7,8 @@ import Register from "./Components/Register";
 import Login from "./Components/Login";
 import BankDetails from "./Components/BankDetails";
 import Navbar from "./Components/Navbar";
+import Balance from "./Components/myBalance";
+import Transfer from "./Components/Transfer";
 
 function App() {
   function isJWTValid() {
@@ -50,7 +52,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/Balance" element={<Balance />} />
           <Route path="/connectBank" element={<BankDetails />} />
+          <Route path="/Transfer" element={<Transfer />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -23,6 +23,13 @@ const GetUser = async () => {
   const { data } = await AuthAPI().get("/user/user-details");
   return data;
 };
+const getUserByPhone = async (phonenumber) => {
+  const { data } = await AuthAPI().get("/user/getUserPhone", {
+    phonenumber,
+  });
+  console.log(data, "network data");
+  return data;
+};
 const UpdateBankDetails = async (
   accountNumber,
   bankName,
@@ -45,4 +52,12 @@ const GetUserQuery = () =>
       return data.message;
     },
   });
-export { GetUserQuery, UpdateBankDetails };
+// const GetUserByPhoneQuery = (phonenumber) =>
+//   useQuery({
+//     queryKey: ["user-Phone"],
+//     queryFn: () => getUserByPhone(phonenumber),
+//     select: (data) => {
+//       return data.message;
+//     },
+//   });
+export { GetUserQuery, UpdateBankDetails, getUserByPhone };

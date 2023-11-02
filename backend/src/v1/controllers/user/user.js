@@ -32,7 +32,12 @@ const userController = {
             IFSC: IFSCcode,
           },
         });
-
+        await prisma.wallet.create({
+          data: {
+            userId,
+            balance: 100000.0,
+          },
+        });
         // You can send a response or handle success here
         res.status(200).json({
           success: true,
@@ -46,12 +51,10 @@ const userController = {
     } catch (err) {
       // Handle any errors that occur during the process
       console.error(err);
-      res
-        .status(500)
-        .json({
-          success: false,
-          error: "An error occurred while updating bank details",
-        });
+      res.status(500).json({
+        success: false,
+        error: "An error occurred while updating bank details",
+      });
     } finally {
       // Close the Prisma client connection
       await prisma.$disconnect();
@@ -65,6 +68,9 @@ const userController = {
         where: {
           id: req.user.id,
         },
+        include: {
+          wallet: true,
+        },
       });
       res.json(customResponse(200, user));
     } catch (err) {
@@ -72,14 +78,63 @@ const userController = {
       console.log(err, "err");
     }
   },
-  async sendMoney(req, res, next) {
-    const { receiverId, amount, description, currency, paymentMethod } =
-      req.body;
-    const senderId = req.user.id;
-
+  async getUserByPhoneNumber(req, res, next) {
     try {
+      const { phonenumber } = req.body;
+      let user;
+      user = prisma.user.findFirstOrThrow({
+        where: {
+          phonenumber: phonenumber,
+        },
+      });
+
+      user
+        .then((result) => {
+          if (result) {
+            res.json(customResponse(200, result));
+            console.log(result, "user");
+          } else {
+            res.status(200).json({
+              success: false,
+              error: "No user found",
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).json({
+            success: false,
+            error: err,
+          });
+        });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        error: err,
+      });
+    }
+  },
+  async sendMoney(req, res, next) {
+    try {
+      const {
+        receiverPhoneNumber,
+        amount,
+        description,
+        currency,
+        paymentMethod,
+      } = req.body;
+      const user = await prisma.user.findFirst({
+        where: {
+          phonenumber: receiverPhoneNumber,
+        },
+      });
+      let receiverId;
+      if (user) {
+        receiverId = user.id;
+      } else {
+        return res.status(404).json({ message: "Receiver not found" });
+      }
       const sender = await prisma.user.findUnique({
-        where: { id: senderId },
+        where: { id: req.user.id },
         select: {
           wallet: true,
         },
@@ -105,7 +160,7 @@ const userController = {
       // Create a single transaction record for the sender and receiver
       const transaction = await prisma.transaction.create({
         data: {
-          senderId,
+          senderId: req.user.id,
           receiverId,
           amount: amount, // Deduct amount from sender
           timestamp,
@@ -119,11 +174,6 @@ const userController = {
       // Update sender's and receiver's wallet balances
       const updatedSenderBalance = sender.wallet[0].balance - amount;
       const updatedReceiverBalance = receiver.wallet[0].balance + amount;
-      console.log(sender.wallet[0]);
-      console.log(receiverId);
-      console.log(updatedSenderBalance);
-
-      console.log(updatedReceiverBalance);
 
       await prisma.wallet.update({
         where: {

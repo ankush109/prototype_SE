@@ -11,20 +11,19 @@ datasource db {
 }
 
 model User {
-  id                String  @id @default(cuid())
+  id                String          @id @default(cuid())
   name              String
-  email             String  @unique
+  email             String          @unique
   bank              String?
   AccountNumber     String?
   AccountHolderName String?
   IFSC              String?
-
-  password      String // Make sure to hash the password before storing it
-  phonenumber   String          @unique
-  wallet        Wallet[]        @relation("user")
-  sender        Transaction[]   @relation("sender")
-  receiver      Transaction[]   @relation("receiver")
-  PaymentMethod PaymentMethod[] @relation("user")
+  password          String // Make sure to hash the password before storing it
+  phonenumber       String          @unique
+  wallet            Wallet[]        @relation("user")
+  sender            Transaction[]   @relation("sender")
+  receiver          Transaction[]   @relation("receiver")
+  PaymentMethod     PaymentMethod[] @relation("user")
 }
 
 model Wallet {
