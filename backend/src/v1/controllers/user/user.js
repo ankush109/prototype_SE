@@ -80,32 +80,24 @@ const userController = {
   },
   async getUserByPhoneNumber(req, res, next) {
     try {
-      const { phonenumber } = req.body;
-      let user;
-      user = prisma.user.findFirstOrThrow({
+      console.log(req.params.id);
+      const user = await prisma.user.findFirst({
         where: {
-          phonenumber: phonenumber,
+          phonenumber: req.query.phonenumber,
         },
       });
-
-      user
-        .then((result) => {
-          if (result) {
-            res.json(customResponse(200, result));
-            console.log(result, "user");
-          } else {
-            res.status(200).json({
-              success: false,
-              error: "No user found",
-            });
-          }
-        })
-        .catch((err) => {
-          res.status(500).json({
-            success: false,
-            error: err,
-          });
+      if (user) {
+        console.log(user, "user");
+        res.status(200).json({
+          message: user,
+          success: true,
         });
+      } else {
+        res.status(200).json({
+          message: "no user found",
+          success: false,
+        });
+      }
     } catch (err) {
       res.status(500).json({
         success: false,
@@ -193,10 +185,14 @@ const userController = {
         },
       });
 
-      res.json({ message: "Money sent successfully", transaction });
+      res.json({
+        message: "Money sent successfully",
+        transaction,
+        success: true,
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: error, success: false });
     }
   },
 };

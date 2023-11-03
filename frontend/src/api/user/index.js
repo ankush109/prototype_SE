@@ -24,10 +24,30 @@ const GetUser = async () => {
   return data;
 };
 const getUserByPhone = async (phonenumber) => {
+  console.log(phonenumber, "req phone number");
   const { data } = await AuthAPI().get("/user/getUserPhone", {
-    phonenumber,
+    params: {
+      phonenumber: phonenumber,
+    },
   });
   console.log(data, "network data");
+  return data;
+};
+const sendMoney = async (
+  receiverPhoneNumber,
+  amount,
+  description,
+  currency,
+  paymentMethod
+) => {
+  console.log(receiverPhoneNumber);
+  const { data } = await AuthAPI().post("/user/sendmoney", {
+    receiverPhoneNumber,
+    amount,
+    description,
+    currency,
+    paymentMethod,
+  });
   return data;
 };
 const UpdateBankDetails = async (
@@ -60,4 +80,4 @@ const GetUserQuery = () =>
 //       return data.message;
 //     },
 //   });
-export { GetUserQuery, UpdateBankDetails, getUserByPhone };
+export { GetUserQuery, UpdateBankDetails, getUserByPhone, sendMoney };
