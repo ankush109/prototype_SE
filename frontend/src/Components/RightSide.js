@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import postanime from "./op.json";
 import Lottie from "react-lottie-player";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 function RightSide() {
   const user = GetUserQuery();
 
@@ -24,20 +25,11 @@ function RightSide() {
             className="bg-blue-500 text-center hover:bg-blue-600 text-white font-bold py-3 m-4 rounded transition-colors duration-300"
           >
             Transfer Funds
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 inline ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            <CurrencyExchangeIcon
+              style={{
+                marginLeft: "8px",
+              }}
+            />
           </Link>
           <hr className="border-t border-gray-300" />
           <div className="py-3">

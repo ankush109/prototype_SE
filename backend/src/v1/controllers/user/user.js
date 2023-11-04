@@ -205,10 +205,16 @@ const userController = {
         where: {
           senderId: userId,
         },
+        include: {
+          receiver: true,
+        },
       });
       const receivedTransactions = await prisma.transaction.findMany({
         where: {
           receiverId: userId,
+        },
+        include: {
+          sender: true,
         },
       });
 

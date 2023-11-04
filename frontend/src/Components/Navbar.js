@@ -1,7 +1,8 @@
 import React from "react";
 import { GetUserQuery } from "../api/user";
 import { Link } from "react-router-dom";
-
+import HomeIcon from "@mui/icons-material/Home";
+import PaymentsIcon from "@mui/icons-material/Payments";
 function Navbar() {
   const user = GetUserQuery();
 
@@ -15,23 +16,24 @@ function Navbar() {
       <div className="flex items-center gap-6 pr-4">
         <div>
           <Link to="/" className="font-bold text-blue-800 hover:text-blue-600">
-            Home
+            <HomeIcon
+              style={{
+                width: "60px",
+              }}
+            />
           </Link>
         </div>
-        <div>
-          <Link
-            to="/Balance"
-            className="font-bold text-blue-800 hover:text-blue-600"
-          >
-            My Balance
-          </Link>
-        </div>
+        <div></div>
         <div>
           <Link
             to="/Transfer"
             className="font-bold text-blue-800 hover:text-blue-600"
           >
-            Send Money
+            <PaymentsIcon
+              style={{
+                width: "60px",
+              }}
+            />
           </Link>
         </div>
 

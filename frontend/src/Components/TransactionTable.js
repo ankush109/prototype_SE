@@ -123,9 +123,9 @@ function TransactionTable() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
-              <th className="px-4 py-2 text-left">Date</th>
-              <th className="px-4 py-2 text-left">Description</th>
+              <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Amount</th>
+              <th className="px-4 py-2 text-left">Date</th>
               <th className="px-4 py-2 text-left">Status</th>
             </tr>
           </thead>
@@ -136,17 +136,22 @@ function TransactionTable() {
                 onClick={() => openTransactionDetails(transaction)}
               >
                 <td className="px-4 py-2">
-                  {formatTimestamp(transaction.timestamp)}
+                  {transaction.senderId !== user?.data.id
+                    ? transaction?.sender?.name
+                    : transaction?.receiver?.name}
                 </td>
-                <td className="px-4 py-2">{transaction.description}</td>
+
                 <td className="px-4 py-2">
                   {transaction.amount > 0 ? (
-                    <span className="text-green-500">{`₹ ${transaction.amount}`}</span>
+                    <span className="text-green-500 font-bold">{`₹ ${transaction.amount}`}</span>
                   ) : (
                     <span className="text-red-500">{` ₹ ${Math.abs(
                       transaction.amount
                     )}`}</span>
                   )}
+                </td>
+                <td className="px-4 py-2">
+                  {formatTimestamp(transaction.timestamp)}
                 </td>
                 <td>
                   <span
