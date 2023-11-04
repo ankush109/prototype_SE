@@ -88,7 +88,7 @@ function TransactionTable() {
     return <Loading />;
   }
   return (
-    <div className="bg-white rounded-2xl p-5 mx-6 w-[60%] shadow-lg">
+    <div className="bg-white rounded-2xl p-4 mx-6 my-10 w-[90%] shadow-lg">
       <h2 className="text-2xl font-semibold mb-4">Transaction History</h2>
       <div className="flex justify-center space-x-4 mb-4">
         <button

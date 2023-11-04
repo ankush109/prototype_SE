@@ -10,7 +10,7 @@ function RightSide() {
   const user = GetUserQuery();
 
   return (
-    <div className="bg-slate-300 max-h-full flex justify-center">
+    <div className="bg-slate-300  flex justify-center">
       {user?.data?.bank ? (
         <div className="bg-white  h-full rounded-2xl w-full max-w-md p-4 m-10 flex flex-col shadow-lg">
           <h1 className="text-center font-bold text-xl text-gray-800">
