@@ -8,8 +8,8 @@ function Navbar() {
 
   return (
     <div className=" h-20 p-4 m-3 rounded-xl w-[90%] bg-gray-200  flex items-center justify-between ">
-      <div className=" bg-blue-600 p-3 m-2 rounded-lg">
-        <Link to="/" className="font-bold text-2xl text-white">
+      <div className=" p-3 m-2 rounded-lg">
+        <Link to="/" className="font-bold text-3xl text-blue-800">
           APay
         </Link>
       </div>

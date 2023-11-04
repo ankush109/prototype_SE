@@ -219,22 +219,16 @@ function Transfer() {
               <span className="font-bold ">{found.bank} Bank</span>
               <p className="text-gray-600 mb-4">Please Enter Your Mpin:</p>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Enter your 4 digit security Pin
-                </label>
                 <input
                   type="password" // Set the input type to "password" for MPIN entry
                   name="mpin"
+                  autofocus
                   value={pinval}
+                  placeholder="enter your Pin here"
                   onChange={(e) => {
                     setpinval(e.target.value);
                   }}
-                  style={{
-                    backgroundColor: "white",
-                    color: "transparent",
-                    textShadow: "0 0 0 #000", // Creating a dotted effect
-                  }}
-                  className="mt-1  p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-300"
+                  className="mt-1  p-2 w-full rounded  focus:ring-2 focus:ring-blue-500 focus:border-blue-300"
                 />
               </div>
               <div className="flex justify-between">

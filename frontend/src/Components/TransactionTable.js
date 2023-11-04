@@ -171,7 +171,7 @@ function TransactionTable() {
           </tbody>
         </table>
       ) : (
-        <p className="text-center">No transactions to display.</p>
+        <p className="text-center">No transactions</p>
       )}
 
       <div className="mt-4 flex justify-center">
