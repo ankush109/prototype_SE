@@ -22,8 +22,10 @@ function Home() {
   };
 
   return (
-    <>
-      <Navbar />
+    <div className="p-3 bg-slate-300">
+      <div className="flex items-center justify-center">
+        <Navbar />
+      </div>
       <div className="flex h-screen">
         <div className="w-1/4 max-h-full bg-slate-300">
           <RightSide />
@@ -94,7 +96,7 @@ function Home() {
           <TransactionTable />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -121,9 +121,12 @@ function Transfer() {
   };
 
   return (
-    <>
+    <div className="bg-slate-300 max-h-full p-3">
       <Navbar />
-      <div className="container flex justify-center mx-auto mt-8">
+      <div className="container bg-slate-300 flex items-center justify-center mx-auto mt-8 ">
+        <div className="">
+          <Lottie animationData={post} play />
+        </div>
         <div className="bg-blue-500  text-white w-1/3 h-1/2 shadow-lg  rounded-lg px-8 pt-6 pb-8 mb-4">
           <h1 className="text-3xl font-bold mb-4">Payment </h1>
           <form onSubmit={handleSubmit}>
@@ -206,9 +209,7 @@ function Transfer() {
             </div>
           </form>
         </div>
-        <div>
-          <Lottie animationData={post} play />
-        </div>
+
         {pin && (
           <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-gray-800 bg-opacity-70">
             <div className="bg-white  rounded p-6 w-[600px]  h-[430px] shadow-lg">
@@ -259,7 +260,7 @@ function Transfer() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
