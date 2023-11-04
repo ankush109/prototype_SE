@@ -11,7 +11,8 @@ const prisma = new PrismaClient();
 const userController = {
   async fillBankDetails(req, res, next) {
     try {
-      const { accountNumber, bankName, IFSCcode, accountHolderName } = req.body;
+      const { mpin, accountNumber, bankName, IFSCcode, accountHolderName } =
+        req.body;
       const userId = req.user.id;
 
       // Check if the user exists
@@ -30,6 +31,7 @@ const userController = {
             bank: bankName,
             AccountHolderName: accountHolderName,
             IFSC: IFSCcode,
+            mpin: mpin,
           },
         });
         await prisma.wallet.create({
@@ -72,6 +74,7 @@ const userController = {
           wallet: true,
         },
       });
+      // console.log(user.mpin, "user");
       res.json(customResponse(200, user));
     } catch (err) {
       res.json(customResponse(400, err));

@@ -18,6 +18,7 @@ model User {
   AccountNumber     String?
   AccountHolderName String?
   IFSC              String?
+  mpin              String?
   password          String // Make sure to hash the password before storing it
   phonenumber       String          @unique
   wallet            Wallet[]        @relation("user")

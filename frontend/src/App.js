@@ -47,7 +47,6 @@ function App() {
         toastOptions={{ duration: 5000 }}
       />
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

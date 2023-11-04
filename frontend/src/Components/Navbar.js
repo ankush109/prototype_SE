@@ -6,13 +6,18 @@ function Navbar() {
   const user = GetUserQuery();
 
   return (
-    <div className=" h-20 flex items-center justify-between ">
-      <div className="pl-4">
-        <Link to="/" className="font-bold text-3xl text-black">
+    <div className=" h-20 p-2 bg-gray-200  flex items-center justify-between ">
+      <div className=" bg-blue-600 p-3 m-2 rounded-lg">
+        <Link to="/" className="font-bold text-2xl text-white">
           APay
         </Link>
       </div>
       <div className="flex items-center gap-6 pr-4">
+        <div>
+          <Link to="/" className="font-bold text-blue-800 hover:text-blue-600">
+            Home
+          </Link>
+        </div>
         <div>
           <Link
             to="/Balance"
@@ -29,14 +34,7 @@ function Navbar() {
             Send Money
           </Link>
         </div>
-        <div>
-          <Link
-            to="/History"
-            className="font-bold text-blue-800 hover:text-blue-600"
-          >
-            History
-          </Link>
-        </div>
+
         <div>
           {!user?.data?.bank ? (
             <Link
@@ -50,7 +48,9 @@ function Navbar() {
           )}
         </div>
         {user?.data ? (
-          <div className="font-bold text-blue-800">Hello, {user.data.name}</div>
+          <div className="font-bold bg-blue-600 p-2 rounded-lg text-white">
+            Hello, {user.data.name}
+          </div>
         ) : (
           <div>
             <Link

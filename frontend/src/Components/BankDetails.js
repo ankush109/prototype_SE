@@ -8,12 +8,14 @@ function BankDetails() {
   const navigate = useNavigate();
 
   const [bankname, setBankName] = useState("");
+  const [mpin, setmpin] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [IFSCCode, setIFSCCode] = useState("");
   const [AccountHolderName, setAccountHolderName] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await UpdateBankDetails(
+      mpin,
       accountNumber,
       bankname,
       IFSCCode,
@@ -53,6 +55,16 @@ function BankDetails() {
             value={IFSCCode}
             required
             onChange={(e) => setIFSCCode(e.target.value)}
+            id="outlined-basic"
+            variant="outlined"
+          />
+        </div>
+        <div className="flex items-center space-x-4">
+          <h1 className="w-48 text-right">Enter Mpin</h1>
+          <TextField
+            value={mpin}
+            required
+            onChange={(e) => setmpin(e.target.value)}
             id="outlined-basic"
             variant="outlined"
           />

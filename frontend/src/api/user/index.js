@@ -55,12 +55,14 @@ const sendMoney = async (
   return data;
 };
 const UpdateBankDetails = async (
+  mpin,
   accountNumber,
   bankName,
   IFSCcode,
   accountHolderName
 ) => {
   const { data } = await AuthAPI().put("/user/fillBankDetails", {
+    mpin,
     accountNumber,
     bankName,
     IFSCcode,

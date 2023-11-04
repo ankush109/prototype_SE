@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetTransactionDetailQuery, GetUserQuery } from "../api/user";
+import Loading from "./Loading";
 
 function formatTimestamp(timestamp) {
   const date = new Date(timestamp);
@@ -21,16 +22,16 @@ function TransactionTable() {
   const transactionsPerPage = 5;
   const [selectedTab, setSelectedTab] = useState("all");
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-
+  const [loading, setloading] = useState(true);
   const indexOfLastTransaction = currentPage * transactionsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
-  const allTransactions = transactionsData.data;
+  const allTransactions = transactionsData?.data;
 
-  const receivedTransactions = allTransactions.filter(
+  const receivedTransactions = allTransactions?.filter(
     (transaction) => transaction.senderId !== user?.data.id
   );
 
-  const sentTransactions = allTransactions.filter(
+  const sentTransactions = allTransactions?.filter(
     (transaction) => transaction.senderId === user?.data.id
   );
 
@@ -48,8 +49,7 @@ function TransactionTable() {
         return allTransactions;
     }
   };
-
-  const transactions = currentTransactions().slice(
+  const transactions = currentTransactions()?.slice(
     indexOfFirstTransaction,
     indexOfLastTransaction
   );
@@ -57,7 +57,7 @@ function TransactionTable() {
   const pageNumbers = [];
   for (
     let i = 1;
-    i <= Math.ceil(currentTransactions().length / transactionsPerPage);
+    i <= Math.ceil(currentTransactions()?.length / transactionsPerPage);
     i++
   ) {
     pageNumbers.push(i);
@@ -79,7 +79,14 @@ function TransactionTable() {
   const closeTransactionDetails = () => {
     setSelectedTransaction(null);
   };
-
+  useEffect(() => {
+    if (allTransactions) {
+      setloading(false);
+    }
+  }, [transactions]);
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="bg-white rounded-2xl p-5 mx-6 w-[60%] shadow-lg">
       <h2 className="text-2xl font-semibold mb-4">Transaction History</h2>
