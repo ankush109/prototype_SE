@@ -52,7 +52,7 @@ function Login() {
       setValue("email", "");
       setShowPassword(false);
     } catch (err) {
-      toast.error(err.response.data.message, { id: err.response.data.message });
+      toast.error("Invalid Credentials");
     }
     reset();
     // As reset will fallback to defaultValues
@@ -78,6 +78,7 @@ function Login() {
                 <TextField
                   id="outlined-basic"
                   label="Email"
+                  required
                   variant="outlined"
                   className="w-full rounded-lg text-white"
                   {...register("email")}
@@ -89,6 +90,7 @@ function Login() {
                   id="outlined-basic"
                   label="Password"
                   variant="outlined"
+                  required
                   className="w-full rounded-lg text-white"
                   type={showPassword ? "text" : "password"}
                   placeholder="enter  a password"

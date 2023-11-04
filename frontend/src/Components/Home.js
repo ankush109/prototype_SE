@@ -107,8 +107,14 @@ function Home() {
                         : x?.receiver?.name}
                     </div>
                     <div> </div>
-                    <div className="font-bold text-green-600">
-                      <AddIcon /> ₹ {x?.amount}{" "}
+                    <div
+                      className={
+                        x.senderId !== user?.data.id
+                          ? " font-bold text-green-600"
+                          : " font-bold text-red-700"
+                      }
+                    >
+                      {x.senderId !== user?.data.id ? "+" : "-"} ₹ {x?.amount}{" "}
                     </div>
                   </div>
                 ))}
