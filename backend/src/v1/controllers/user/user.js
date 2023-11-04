@@ -195,5 +195,34 @@ const userController = {
       res.status(500).json({ message: error, success: false });
     }
   },
+  async getTransactionDetails(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const sendTransactions = await prisma.transaction.findMany({
+        where: {
+          senderId: userId,
+        },
+      });
+      const receivedTransactions = await prisma.transaction.findMany({
+        where: {
+          receiverId: userId,
+        },
+      });
+
+      const allTransactions = [...sendTransactions, ...receivedTransactions];
+
+      res.status(200).json({
+        message: allTransactions,
+        status: true,
+      });
+    } catch (err) {
+      // Handle errors here
+      console.error(err);
+      res.status(500).json({
+        message: "An error occurred while fetching transactions",
+        status: false,
+      });
+    }
+  },
 };
 export default userController;

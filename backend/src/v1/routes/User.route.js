@@ -12,4 +12,9 @@ router.get(
   authMiddleware,
   userController.getUserByPhoneNumber
 );
+router.get(
+  "/getTransactionDetails",
+  authMiddleware,
+  userController.getTransactionDetails
+);
 export default router;

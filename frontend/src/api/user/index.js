@@ -33,6 +33,10 @@ const getUserByPhone = async (phonenumber) => {
   console.log(data, "network data");
   return data;
 };
+const getTransactionDetails = async () => {
+  const { data } = await AuthAPI().get("/user/getTransactionDetails");
+  return data;
+};
 const sendMoney = async (
   receiverPhoneNumber,
   amount,
@@ -72,12 +76,18 @@ const GetUserQuery = () =>
       return data.message;
     },
   });
-// const GetUserByPhoneQuery = (phonenumber) =>
-//   useQuery({
-//     queryKey: ["user-Phone"],
-//     queryFn: () => getUserByPhone(phonenumber),
-//     select: (data) => {
-//       return data.message;
-//     },
-//   });
-export { GetUserQuery, UpdateBankDetails, getUserByPhone, sendMoney };
+const GetTransactionDetailQuery = () =>
+  useQuery({
+    queryKey: ["user-transactions"],
+    queryFn: () => getTransactionDetails(),
+    select: (data) => {
+      return data.message;
+    },
+  });
+export {
+  GetUserQuery,
+  UpdateBankDetails,
+  getUserByPhone,
+  sendMoney,
+  GetTransactionDetailQuery,
+};

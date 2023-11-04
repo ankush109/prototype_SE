@@ -8,7 +8,9 @@ function Navbar() {
   return (
     <div className=" h-20 flex items-center justify-between ">
       <div className="pl-4">
-        <h1 className="font-bold text-3xl text-black">APay</h1>
+        <Link to="/" className="font-bold text-3xl text-black">
+          APay
+        </Link>
       </div>
       <div className="flex items-center gap-6 pr-4">
         <div>

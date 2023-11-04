@@ -44,7 +44,7 @@ function Home() {
             </h2>
           </div>
         </div>
-        <div className="bg-white rounded-2xl p-5 mx-6 w-[60%] shadow-lg">
+        {/* <div className="bg-white rounded-2xl p-5 mx-6 w-[60%] shadow-lg">
           <div className="flex gap-2">
             <WalletIcon />
             <h1 className="text-lg font-semibold">Available Balance Summary</h1>
@@ -58,8 +58,8 @@ function Home() {
             mollis, arcu quis laoreet sagittis, sapien turpis pretium magna, et
             mollis urna magna vel arcu. Pellentesque malesuada magna sed est
           </h2>
-        </div>
-        <div className="w-3/9  bg-slate-300 ">
+        </div> */}
+        {/* <div className="w-3/9  bg-slate-300 ">
           <div className="flex bg-white p-4  rounded-lg w-1/2 my-5 mx-10 gap-5">
             <button
               onClick={() => handleTabChange("tab1")}
@@ -81,14 +81,15 @@ function Home() {
 
           {activeTab === "tab1" && (
             <div className="content-for-tab1">
-              <TransactionTable />
+            
             </div>
           )}
 
           {activeTab === "tab2" && (
             <div className="content-for-tab2">hello</div>
           )}
-        </div>
+        </div> */}
+        <TransactionTable />
       </div>
     </div>
   );
