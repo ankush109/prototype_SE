@@ -58,38 +58,42 @@ const loginController = {
 
   async register(req, res, next) {
     try {
-      // name , password , phonenumber , email -> for register
-
       const resp = await req.body;
       delete resp.confirmPassword;
-      const user = await prisma.user.findUnique({
+
+      const existingUser = await prisma.user.findUnique({
         where: {
-          email: resp.email, // finds the user with the given mail
+          email: resp.email,
         },
       });
-      if (user) {
-        res.status(400).json({
+
+      if (existingUser) {
+        return res.status(400).json({
           message: "User already exists",
         });
       }
-      // normal salting and hashing password
 
+      // Continue with user registration
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(resp.password, salt);
       const data = {
         ...resp,
         password: hashedPassword,
       };
-      const createduser = await prisma.user.create({
+      const createdUser = await prisma.user.create({
         data,
       });
-      res.status(200).json({
+
+      return res.status(200).json({
         message: "User created successfully",
-        createduser,
+        createdUser,
       });
     } catch (err) {
       console.log(err);
-      res.json(customResponse(400, err));
+      res.status(500).json({
+        error: err,
+        success: false,
+      });
     }
   },
 };

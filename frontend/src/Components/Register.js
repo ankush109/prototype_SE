@@ -13,8 +13,10 @@ import toast from "react-hot-toast";
 import { registerUser } from "../api";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router";
+import { validateEmail } from "../api/user";
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
+  const [emailerr, setemailerr] = useState("");
   const navigate = useNavigate();
 
   const {
@@ -27,7 +29,6 @@ function Register() {
     formState: { errors, isSubmitting, isValidating },
   } = useForm({
     mode: "onChange",
-
     defaultValues: {
       name: "",
       email: "",
@@ -35,34 +36,52 @@ function Register() {
       phonenumber: "",
     },
   });
+
   const onSubmit = async (formData) => {
-    console.log(formData);
-    toast.success("Registered successfully");
-    console.table(formData);
     try {
       console.log("Submitting", formData);
+
+      // Validation for phone number
+      if (!/^\d{10}$/.test(formData.phonenumber)) {
+        toast.error("phone number not valid ");
+      }
+
+      // Validation for email
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+        toast.error("email  not valid ");
+      }
+
       const { data } = await registerUser(formData);
-      // toast.success(data.message, { id: data.message });
-      navigate("/Login");
-      reset();
-      // As reset will fallback to defaultValues
-      // so they have to be cleared explicitly
-      setValue("name", "");
-      setValue("email", "");
-      setValue("picture", null);
-      setShowPassword(false);
-      // setShowConfirmPassword(false);
-      // router.replace("/Register");
+      console.log(data, "data");
+      if (data.success) {
+        toast.success("Registered successfully");
+        navigate("/Login");
+        reset();
+        setValue("name", "");
+        setValue("email", "");
+        setValue("picture", null);
+        setShowPassword(false);
+      }
     } catch (err) {
       console.log(err);
+      toast.error(err.reponse.data.message);
     }
+  };
+  const onEmailChange = async (event) => {
+    const email = event.target.value;
+    const data = await validateEmail(email);
+    console.log(data, "Data");
+
+    setemailerr(data.message);
+
+    console.log(emailerr, "s");
   };
   return (
     <div className="flex">
       <div className=" hidden lg:block w-1/2 h-screen bg-blue-400">
         <img
           className="object-cover h-full w-full"
-          src="https://wallpaperaccess.com/full/2593043.jpg"
+          src="https://img.freepik.com/premium-vector/digital-pay-technology-concept-secure-online-paymentscontactless-payment-system_369728-44.jpg?w=2000"
         />
       </div>
       <div className="flex lg:w-1/2  sm:w-full h-screen justify-center p-20">
@@ -87,8 +106,15 @@ function Register() {
                   variant="outlined"
                   className="w-full rounded-lg text-white"
                   {...register("email")}
+                  onChange={(e) => {
+                    onEmailChange(e);
+                  }}
                 />
+                {emailerr && (
+                  <div className={"text-red-500 font-bold"}>{emailerr}</div>
+                )}
               </div>
+
               <div className="">
                 <TextField
                   id="outlined-basic"
@@ -137,6 +163,7 @@ function Register() {
               >
                 Already have an account?{" "}
               </p>
+
               <p
                 className="text-blue-500 hover: cursor-pointer"
                 onClick={() => {

@@ -17,4 +17,5 @@ router.get(
   authMiddleware,
   userController.getTransactionDetails
 );
+router.post("/validateEmail", userController.validateEmail);
 export default router;

@@ -233,5 +233,31 @@ const userController = {
       });
     }
   },
+  async validateEmail(req, res, next) {
+    try {
+      const { email } = req.body; // Assuming the email is in the request body
+      console.log(email, "email");
+      // Check if the email already exists in the database
+      const existingUser = await prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+
+      if (existingUser) {
+        // The email already exists in the database
+        return res
+          .status(200)
+          .json({ success: true, message: "Email already exists" });
+      } else {
+        return res
+          .status(200)
+          .json({ success: true, message: "Email  is avaliable" });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: error });
+    }
+  },
 };
 export default userController;

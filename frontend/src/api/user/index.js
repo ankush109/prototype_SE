@@ -54,6 +54,18 @@ const sendMoney = async (
   });
   return data;
 };
+const validateEmail = async (email) => {
+  try {
+    console.log(email, "email from frontend");
+    const { data } = await AuthAPI().post("/user/validateEmail", {
+      email,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error in validateEmail:", error);
+    throw error; // Rethrow the error to handle it at a higher level
+  }
+};
 const UpdateBankDetails = async (
   mpin,
   accountNumber,
@@ -78,6 +90,7 @@ const GetUserQuery = () =>
       return data.message;
     },
   });
+
 const GetTransactionDetailQuery = () =>
   useQuery({
     queryKey: ["user-transactions"],
@@ -92,4 +105,5 @@ export {
   getUserByPhone,
   sendMoney,
   GetTransactionDetailQuery,
+  validateEmail,
 };

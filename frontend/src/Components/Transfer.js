@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import { ListItemSecondaryAction } from "@mui/material";
 import Loading from "./Loading";
+import paymentSuccess from "./paySuccess.json";
 function Transfer() {
   const user = GetUserQuery();
   const [found, setFound] = useState(null);
@@ -16,6 +17,7 @@ function Transfer() {
   const [pinval, setpinval] = useState("");
   const [receiverPhoneNumber, setReceiverPhoneNumber] = useState("");
   const [amount, setAmount] = useState("");
+  const [success, setsuccess] = useState(false);
   const [description, setDescription] = useState("");
   const [loading, setloading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("credit card");
@@ -61,6 +63,40 @@ function Transfer() {
     setDescription("");
     setFound("");
   };
+  // const checkconfirmPayment = async () => {
+  //   if (pinval === user?.data.mpin) {
+  //     const data = await sendMoney(
+  //       receiverPhoneNumber,
+  //       parseFloat(amount),
+  //       description,
+  //       "INR",
+  //       paymentMethod
+  //     );
+  //     setloading(true);
+  //     setTimeout(() => {
+  //       console.log(data);
+  //       if (data.success) {
+  //         toast.success("Money sent");
+  //       }
+  //       setReceiverPhoneNumber("");
+  //       setAmount("");
+  //       setDescription("");
+  //       navigate("/");
+  //       navigate("/");
+  //       setpin(false);
+  //       setsuccess(true);
+  //       setloading(false);
+  //     }, 6000);
+  //   } else {
+  //     toast.error("wrong mpin transaction failed");
+  //     setReceiverPhoneNumber("");
+  //     setAmount("");
+  //     setDescription("");
+  //     navigate("/");
+  //     navigate("/");
+  //     setpin(false);
+  //   }
+  // };
   const checkconfirmPayment = async () => {
     if (pinval === user?.data.mpin) {
       const data = await sendMoney(
@@ -72,26 +108,20 @@ function Transfer() {
       );
       setloading(true);
       setTimeout(() => {
-        console.log(data);
         if (data.success) {
+          // Update the success state when payment is successful
+          setsuccess(true);
           toast.success("Money sent");
         }
-        setReceiverPhoneNumber("");
-        setAmount("");
-        setDescription("");
-        navigate("/");
-        navigate("/");
+        // setReceiverPhoneNumber("");
+        // setAmount("");
+        // setDescription("");
+
         setpin(false);
         setloading(false);
-      }, 3000);
+      }, 6000);
     } else {
       toast.error("wrong mpin transaction failed");
-      setReceiverPhoneNumber("");
-      setAmount("");
-      setDescription("");
-      navigate("/");
-      navigate("/");
-      setpin(false);
     }
   };
   const handleSubmit = async (e) => {
@@ -250,6 +280,16 @@ function Transfer() {
                 <h1>Money Will be send to {found?.name}</h1>
               </div>
               {loading ? <Loading /> : ""}
+            </div>
+          </div>
+        )}
+        {success && (
+          <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-gray-800 bg-opacity-70">
+            <div className="bg-white rounded-lg flex flex-col justify-center items-center   p-6 w-[500px]  h-[300px] shadow-lg">
+              <Lottie animationData={paymentSuccess} play />
+              <h3 className="text-xl  text-green-500 font-bold mb-4">
+                Payment success of ₹ {amount} to {found?.name}
+              </h3>
             </div>
           </div>
         )}
