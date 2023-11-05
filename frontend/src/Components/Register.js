@@ -52,7 +52,7 @@ function Register() {
       }
 
       const { data } = await registerUser(formData);
-      console.log(data, "data");
+      console.log(data.success, "data");
       if (data.success) {
         toast.success("Registered successfully");
         navigate("/Login");

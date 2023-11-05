@@ -47,16 +47,14 @@ function Login() {
         navigate("/");
       }
       reset();
-      // As reset will fallback to defaultValues
-      // so they have to be cleared explicitly
+
       setValue("email", "");
       setShowPassword(false);
     } catch (err) {
       toast.error("Invalid Credentials");
     }
     reset();
-    // As reset will fallback to defaultValues
-    // so they have to be cleared explicitly
+
     setValue("email", "");
     setShowPassword(false);
   };
@@ -65,7 +63,7 @@ function Login() {
       <div className=" hidden lg:block w-1/2 h-screen bg-blue-400">
         <img
           className="object-cover h-full w-full"
-          src="https://wallpaperaccess.com/full/2593043.jpg"
+          src="https://img.freepik.com/premium-vector/digital-pay-technology-concept-secure-online-paymentscontactless-payment-system_369728-44.jpg?w=2000"
         />
       </div>
       <div className="flex lg:w-1/2  sm:w-full  justify-center p-32">

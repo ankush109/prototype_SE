@@ -1,11 +1,11 @@
 import React from "react";
 import { GetUserQuery } from "../api/user";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import PaymentsIcon from "@mui/icons-material/Payments";
 function Navbar() {
   const user = GetUserQuery();
-
+  const navigate = useNavigate();
   return (
     <div className=" h-20 p-4 m-3 rounded-xl w-[90%] bg-gray-200  flex items-center justify-between ">
       <div className=" p-3 m-2 rounded-lg">
@@ -49,10 +49,28 @@ function Navbar() {
             ""
           )}
         </div>
+
         {user?.data ? (
-          <div className="font-bold bg-blue-600 p-2 rounded-lg text-white">
-            Hello, {user.data.name}
-          </div>
+          <>
+            <div className="font-bold bg-blue-600 p-2 rounded-lg text-white">
+              Hello, {user.data.name}
+            </div>
+            <div>
+              {user?.data ? (
+                <div
+                  className="text-lg text-blue-800 font-bold cursor-pointer"
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    navigate("/login");
+                  }}
+                >
+                  Logout
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </>
         ) : (
           <div>
             <Link
