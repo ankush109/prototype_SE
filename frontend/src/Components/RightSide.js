@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetUserQuery } from "../api/user";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import CardTravelIcon from "@mui/icons-material/CardTravel";
@@ -7,18 +7,42 @@ import { Link } from "react-router-dom";
 import postanime from "./op.json";
 import Lottie from "react-lottie-player";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+
 function RightSide() {
   const user = GetUserQuery();
+  const bankAccounts = user?.data?.bankAccounts;
+  const [selectedAccountIndex, setSelectedAccountIndex] = useState(0);
+  const [selectedBankAccount, setSelectedAccount] = useState(bankAccounts[0]);
+
+  const handleAccountChange = (index) => {
+    setSelectedAccountIndex(index);
+    setSelectedAccount(bankAccounts[index]);
+  };
 
   return (
     <div className="bg-slate-300  flex justify-center">
-      {user?.data?.bank ? (
+      {user?.data?.bankAccounts.length > 0 ? (
         <div className="bg-white  h-full rounded-2xl w-full max-w-md p-4 m-10 flex flex-col shadow-lg">
           <h1 className="text-center font-bold text-xl text-gray-800">
             Available Balance
           </h1>
+          <h1>{selectedBankAccount.phoneNumber}</h1>
+          <div className="flex justify-between items-center mb-4">
+            <label className="text-gray-600">Select Bank Account:</label>
+            <select
+              value={selectedAccountIndex}
+              onChange={(e) => handleAccountChange(e.target.value)}
+              className="p-2 border border-gray-300 rounded"
+            >
+              {user?.data?.bankAccounts?.map((account, index) => (
+                <option key={index} value={index}>
+                  {account.bankName}
+                </option>
+              ))}
+            </select>
+          </div>
           <h1 className="text-center py-2 text-cyan-500 font-bold text-3xl">
-            ₹ {user?.data?.wallet[0]?.balance}
+            ₹ {user?.data?.bankAccounts[selectedAccountIndex]?.wallet.balance}
           </h1>
           <Link
             to="/Transfer"
@@ -32,37 +56,12 @@ function RightSide() {
             />
           </Link>
           <hr className="border-t border-gray-300" />
-          <div className="py-3">
-            <div className="flex items-center gap-2">
-              <CardTravelIcon />
-              <h1 className="text-lg font-semibold">Employment Information</h1>
-            </div>
-            <div className="flex gap-1 py-2">
-              <h1 className="text-gray-600">Company Name:</h1>
-              <h1 className="text-gray-800">Airtel Inc</h1>
-            </div>
-          </div>
-          <hr className="border-t border-gray-300" />
-          <div className="py-3">
-            <div className="flex items-center gap-2">
-              <AccountBalanceIcon />
-              <h1 className="text-lg font-semibold">Bank Account Details</h1>
-            </div>
-            <div className="flex gap-1 py-2">
-              <h1 className="text-gray-600">Bank Name:</h1>
-              <h1 className="text-gray-800">{user?.data?.bank}</h1>
-            </div>
-            <div className="flex gap-1 py-2">
-              <h1 className="text-gray-600">Account Number:</h1>
-              <h1 className="text-gray-800">{user?.data?.AccountNumber}</h1>
-            </div>
-          </div>
-          <Lottie animationData={postanime} play className="w-62 h-84" />
+          {/* ... rest of the code remains unchanged ... */}
         </div>
       ) : (
         <div className="bg-white  h-full rounded-2xl w-full max-w-md p-4 m-10 flex flex-col shadow-lg">
           <h1 className="font-bold">
-            Please Link your Bank Acccount to start transferring payment{" "}
+            Please Link your Bank Account to start transferring payment{" "}
           </h1>
           <Link
             to="/connectBank"

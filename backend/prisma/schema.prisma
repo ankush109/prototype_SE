@@ -11,20 +11,30 @@ datasource db {
 }
 
 model User {
-  id                String          @id @default(cuid())
-  name              String
-  email             String          @unique
-  bank              String?
-  AccountNumber     String?
-  AccountHolderName String?
-  IFSC              String?
-  mpin              String?
-  password          String // Make sure to hash the password before storing it
-  phonenumber       String          @unique
-  wallet            Wallet[]        @relation("user")
-  sender            Transaction[]   @relation("sender")
-  receiver          Transaction[]   @relation("receiver")
-  PaymentMethod     PaymentMethod[] @relation("user")
+  id            String          @id @default(cuid())
+  name          String
+  email         String          @unique
+  phonenumber   String          @unique
+  password      String // Make sure to hash the password before storing it
+  bankAccounts  BankAccount[]   @relation("user")
+  wallet        Wallet[]        @relation("user")
+  sender        Transaction[]   @relation("sender")
+  receiver      Transaction[]   @relation("receiver")
+  PaymentMethod PaymentMethod[] @relation("user")
+}
+
+model BankAccount {
+  id                String @id @default(cuid())
+  accountNumber     String
+  accountHolderName String
+  bankName          String
+  ifsc              String
+  mpin              String
+  userId            String
+  phoneNumber       String @unique
+  wallet            Wallet @relation("bankAccount", fields: [walletId], references: [id])
+  user              User   @relation("user", fields: [userId], references: [id])
+  walletId          String @unique
 }
 
 model Wallet {
@@ -32,21 +42,24 @@ model Wallet {
   balance Float
   userId  String
 
-  user User @relation("user", fields: [userId], references: [id])
+  user        User         @relation("user", fields: [userId], references: [id])
+  bankAccount BankAccount? @relation("bankAccount")
 }
 
 model Transaction {
-  id            String   @id @default(cuid())
-  senderId      String
-  receiverId    String
-  amount        Float // Change to Float
-  timestamp     DateTime
-  status        String // 'pending', 'completed', etc.
-  description   String?
-  currency      String // 'USD', 'EUR', etc.
-  paymentMethod String // 'credit card', 'PayPal', etc.
-  sender        User     @relation("sender", fields: [senderId], references: [id])
-  receiver      User     @relation("receiver", fields: [receiverId], references: [id])
+  id                  String   @id @default(cuid())
+  senderId            String
+  receiverId          String
+  senderPhoneNumber   String
+  recieverPhoneNumber String
+  amount              Float // Change to Float
+  timestamp           DateTime
+  status              String // 'pending', 'completed', etc.
+  description         String?
+  currency            String // 'USD', 'EUR', etc.
+  paymentMethod       String // 'credit card', 'PayPal', etc.
+  sender              User     @relation("sender", fields: [senderId], references: [id])
+  receiver            User     @relation("receiver", fields: [receiverId], references: [id])
 }
 
 model PaymentMethod {

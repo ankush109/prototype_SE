@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://payment-backend-5u4w.onrender.com/v1/",
+  baseURL: `http://localhost:5000/v1/`,
   headers: {
     "Content-Type": "application/json",
   },

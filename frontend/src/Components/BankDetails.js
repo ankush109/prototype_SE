@@ -8,8 +8,9 @@ import Navbar from "./Navbar";
 function BankDetails() {
   const navigate = useNavigate();
 
-  const [bankname, setBankName] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
   const [mpin, setmpin] = useState("");
+  const [bankname, setBankName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [IFSCCode, setIFSCCode] = useState("");
   const [AccountHolderName, setAccountHolderName] = useState("");
@@ -17,6 +18,7 @@ function BankDetails() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await UpdateBankDetails(
+      phoneNumber,
       mpin,
       accountNumber,
       bankname,
@@ -60,6 +62,16 @@ function BankDetails() {
               value={bankname}
               required
               onChange={(e) => setBankName(e.target.value)}
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              fullWidth
+              label="Phone number"
+              variant="outlined"
+              value={phoneNumber}
+              required
+              onChange={(e) => setphoneNumber(e.target.value)}
             />
           </Box>
           <Box mt={2}>

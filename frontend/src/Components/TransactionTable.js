@@ -124,6 +124,7 @@ function TransactionTable() {
           <thead>
             <tr>
               <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">Phone number</th>
               <th className="px-4 py-2 text-left">Amount</th>
               <th className="px-4 py-2 text-left">Date</th>
               <th className="px-4 py-2 text-left">Status</th>
@@ -140,7 +141,11 @@ function TransactionTable() {
                     ? transaction?.sender?.name
                     : transaction?.receiver?.name}
                 </td>
-
+                <td className="px-4 py-2">
+                  {transaction.senderId !== user?.data.id
+                    ? transaction?.senderPhoneNumber
+                    : transaction?.recieverPhoneNumber}
+                </td>
                 <td className="px-4 py-2">
                   {transaction.amount > 0 ? (
                     <span className="text-green-500 font-bold">{`₹ ${transaction.amount}`}</span>

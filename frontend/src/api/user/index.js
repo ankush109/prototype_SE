@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 const AuthAPI = () => {
   if (typeof window !== "undefined") {
     return axios.create({
-      baseURL: `https://payment-backend-5u4w.onrender.com/v1/`,
+      baseURL: `http://localhost:5000/v1/`,
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const AuthAPI = () => {
     });
   } else {
     return axios.create({
-      baseURL: `https://payment-backend-5u4w.onrender.com/v1/`,
+      baseURL: `http://localhost:5000/v1/`,
       headers: {
         authorization: `Bearer }`,
         "Content-Type": "application/json",
@@ -38,7 +38,10 @@ const getTransactionDetails = async () => {
   return data;
 };
 const sendMoney = async (
+  senderPhonenumber,
   receiverPhoneNumber,
+  receiverWalletId,
+  senderWalletId,
   amount,
   description,
   currency,
@@ -46,7 +49,10 @@ const sendMoney = async (
 ) => {
   console.log(receiverPhoneNumber);
   const { data } = await AuthAPI().post("/user/sendmoney", {
+    senderPhonenumber,
     receiverPhoneNumber,
+    receiverWalletId,
+    senderWalletId,
     amount,
     description,
     currency,
@@ -67,6 +73,7 @@ const validateEmail = async (email) => {
   }
 };
 const UpdateBankDetails = async (
+  phoneNumber,
   mpin,
   accountNumber,
   bankName,
@@ -74,6 +81,7 @@ const UpdateBankDetails = async (
   accountHolderName
 ) => {
   const { data } = await AuthAPI().put("/user/fillBankDetails", {
+    phoneNumber,
     mpin,
     accountNumber,
     bankName,

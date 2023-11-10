@@ -100,11 +100,11 @@ function Home() {
                 style={{ maxHeight: "500px", overflowY: "auto" }}
               >
                 {sortedTransactions?.map((x) => (
-                  <div className="flex gap-4 p-2" key={x.id}>
+                  <div className="flex gap-4 p-2" key={x?.id}>
                     <div className="text-xl font-semibold">
-                      {x.senderId !== user?.data.id
-                        ? x?.sender?.name
-                        : x?.receiver?.name}
+                      {x.senderId !== user?.data?.id
+                        ? x?.senderPhoneNumber
+                        : x?.recieverPhoneNumber}
                     </div>
                     <div> </div>
                     <div
