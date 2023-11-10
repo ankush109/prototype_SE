@@ -82,10 +82,10 @@ function Home() {
             {uniqueSortedTransactions?.map((x) => (
               <div
                 className="flex gap-4 p-2 border-b border-gray-300"
-                key={x.id}
+                key={x?.id}
               >
                 <div className="text-xl font-semibold">
-                  {x.senderId !== user?.data.id
+                  {x.senderId !== user?.data?.id
                     ? x?.sender?.name
                     : x?.receiver?.name}
                 </div>

@@ -23,15 +23,17 @@ const limiter = rateLimit({
 });
 
 const app = express();
-const corsOption = {
-  origin: [process.env.FRONTEND_URL],
-};
 
+const corsOptions = {
+  origin: [process.env.FRONTEND_URL],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 // Global variable appRoot with base dirname
 global.appRoot = path.resolve(__dirname);
 
 // Middlewares
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 app.use(helmet());
 app.set("trust proxy", 1);
 app.use(limiter);
