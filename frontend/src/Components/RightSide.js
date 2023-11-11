@@ -10,13 +10,11 @@ import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 
 function RightSide() {
   const user = GetUserQuery();
-  const bankAccounts = user?.data?.bankAccounts;
+
   const [selectedAccountIndex, setSelectedAccountIndex] = useState(0);
-  const [selectedBankAccount, setSelectedAccount] = useState(bankAccounts[0]);
 
   const handleAccountChange = (index) => {
     setSelectedAccountIndex(index);
-    setSelectedAccount(bankAccounts[index]);
   };
 
   return (
@@ -26,7 +24,7 @@ function RightSide() {
           <h1 className="text-center font-bold text-xl text-gray-800">
             Available Balance
           </h1>
-          <h1>{selectedBankAccount.phoneNumber}</h1>
+          {/* <h1>{selectedBankAccount.phoneNumber}</h1> */}
           <div className="flex justify-between items-center mb-4">
             <label className="text-gray-600">Select Bank Account:</label>
             <select
