@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 const AuthAPI = () => {
   if (typeof window !== "undefined") {
     return axios.create({
-      baseURL: `https://payment-backend-5u4w.onrender.com/v1/`,
+      baseURL: `${process.env.REACT_APP_BACKEND_URL}/v1/`,
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const AuthAPI = () => {
     });
   } else {
     return axios.create({
-      baseURL: `https://payment-backend-5u4w.onrender.com/v1/`,
+      baseURL: `${process.env.REACT_APP_BACKEND_URL}/v1/`,
       headers: {
         authorization: `Bearer }`,
         "Content-Type": "application/json",

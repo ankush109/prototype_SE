@@ -109,12 +109,12 @@ function Home() {
                     <div> </div>
                     <div
                       className={
-                        x.senderId !== user?.data.id
+                        x?.senderId !== user?.data?.id
                           ? " font-bold text-green-600"
                           : " font-bold text-red-700"
                       }
                     >
-                      {x.senderId !== user?.data.id ? "+" : "-"} ₹ {x?.amount}{" "}
+                      {x?.senderId !== user?.data?.id ? "+" : "-"} ₹ {x?.amount}{" "}
                     </div>
                   </div>
                 ))}

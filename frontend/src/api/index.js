@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: `https://payment-backend-5u4w.onrender.com/v1/`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/v1/`,
   headers: {
     "Content-Type": "application/json",
   },
