@@ -43,20 +43,71 @@ function Home() {
         <Navbar />
       </div>
       <div className="flex  h-screen">
-        <div className="w-1/3 max-h-full bg-slate-300">
-          <RightSide />
+        <div className=" max-h-full bg-slate-300">
+             <div className="flex justify-center">
+          <div className="bg-white rounded-2xl w-[430px] p-2 m-7 flex flex-col shadow-lg">
+           
+            {/* {uniqueSortedTransactions?.map((x) => (
+              <div
+                className="flex gap-4 p-2 border-b border-gray-300"
+                key={x?.id}
+              >
+                <div className="text-xl font-semibold">
+                  {x.senderId !== user?.data?.id
+                    ? x?.sender?.name
+                    : x?.receiver?.name}
+                </div>
+              </div>
+            ))} */}
+           <div>
+  <h1 className="bg-blue-600 text-white text-lg font-semibold text-center p-2 m-3">
+    Recent Transactions
+  </h1>
+  <div className="scrollable-div" style={{ maxHeight: "500px", overflowY: "auto" }}>
+    <table className="min-w-full bg-white border rounded-lg shadow-md">
+      <thead className="bg-gray-100">
+        <tr>
+          <th className="text-left p-2 border-b-2">Phone Number</th>
+          <th className="text-left p-2 border-b-2">Type</th>
+          <th className="text-right p-2 border-b-2">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sortedTransactions?.map((x) => (
+          <tr key={x?.id} className="hover:bg-gray-100">
+            <td className="p-2 border-b">
+              {x.senderId !== user?.data?.id ? x?.senderPhoneNumber : x?.recieverPhoneNumber}
+            </td>
+            <td className="p-2 border-b">
+              {x?.senderId !== user?.data?.id ? (
+                <span className="font-bold text-green-600">Credit</span>
+              ) : (
+                <span className="font-bold text-red-700">Debit</span>
+              )}
+            </td>
+            <td className="p-2 border-b text-right">
+              {x?.senderId !== user?.data?.id ? "+" : "-"} ₹ {x?.amount}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+          </div>
         </div>
-        <div className="w-3/4 flex flex-col items-center  bg-slate-300 py-2">
-          <h1 className="text-2xl font-bold my-4 w-[60%] text-center bg-blue-600 text-white p-2 rounded-lg">
-            Dashboard
-          </h1>
-          <img
+        </div>
+        <div className="">
+           <img
             style={{
               width: "820px",
               margin: "10px",
             }}
             src="https://static.mygov.in/media/blog/2021/07/banner-scaled.jpg"
           />
+        <RightSide/>
+         
           {/* <div className="bg-white rounded-2xl w-72 max-w-md p-4 m-10 flex flex-col shadow-lg">
             <h1 className="text-lg font-semibold">Invite a friend, get ₹5</h1>
             <h2>
@@ -72,56 +123,9 @@ function Home() {
             </h2>
           </div> */}
 
-          <TransactionTable />
+        
         </div>
-        <div className="flex justify-center">
-          <div className="bg-white rounded-2xl w-[330px] p-2 m-7 flex flex-col shadow-lg">
-            <h1 className="text-lg font-semibold text-center bg-blue-600 text-white p-2 m-3">
-              Contacts
-            </h1>
-            {uniqueSortedTransactions?.map((x) => (
-              <div
-                className="flex gap-4 p-2 border-b border-gray-300"
-                key={x?.id}
-              >
-                <div className="text-xl font-semibold">
-                  {x.senderId !== user?.data?.id
-                    ? x?.sender?.name
-                    : x?.receiver?.name}
-                </div>
-              </div>
-            ))}
-            <div>
-              <h1 className=" bg-blue-600 text-white text-lg font-semibold text-center p-2 m-3">
-                Recent Transactions
-              </h1>
-              <div
-                className="scrollable-div"
-                style={{ maxHeight: "500px", overflowY: "auto" }}
-              >
-                {sortedTransactions?.map((x) => (
-                  <div className="flex gap-4 p-2" key={x?.id}>
-                    <div className="text-xl font-semibold">
-                      {x.senderId !== user?.data?.id
-                        ? x?.senderPhoneNumber
-                        : x?.recieverPhoneNumber}
-                    </div>
-                    <div> </div>
-                    <div
-                      className={
-                        x?.senderId !== user?.data?.id
-                          ? " font-bold text-green-600"
-                          : " font-bold text-red-700"
-                      }
-                    >
-                      {x?.senderId !== user?.data?.id ? "+" : "-"} ₹ {x?.amount}{" "}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+       
       </div>
     </div>
   );

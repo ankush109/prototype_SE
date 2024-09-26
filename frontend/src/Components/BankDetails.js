@@ -36,7 +36,7 @@ function BankDetails() {
       <Navbar />
       <Container
         maxWidth="sm"
-        className="bg-blue-200 p-2 flex items-center justify-center rounded-xl"
+        className="bg-gray-50 p-2 flex items-center justify-center rounded-xl"
       >
         <Box mt={4}>
           <Typography variant="h4" align="center">
@@ -104,11 +104,11 @@ function BankDetails() {
               onChange={(e) => setAccountHolderName(e.target.value)}
             />
           </Box>
-          <Box mt={4} display="flex" justifyContent="center">
-            <Button type="submit" variant="contained" color="primary">
+          <div className="mt-5" >
+            <Button  className="w-full mt-5" type="submit" variant="contained" color="primary">
               Submit
             </Button>
-          </Box>
+          </div>
         </form>
       </Container>
     </>

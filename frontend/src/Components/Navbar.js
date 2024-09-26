@@ -15,7 +15,7 @@ function Navbar() {
       </div>
       <div className="flex items-center gap-6 pr-4">
         <div>
-          <Link to="/" className="font-bold text-blue-800 hover:text-blue-600">
+          <Link to="/home" className="font-bold text-blue-800 hover:text-blue-600">
             <HomeIcon
               style={{
                 width: "60px",
@@ -39,12 +39,17 @@ function Navbar() {
 
         <div>
           {!user?.data?.bank ? (
+          
+          <div className="flex gap-5">
             <Link
               to="/connectBank"
               className="font-bold text-blue-800 hover:text-blue-600"
             >
               Connect Bank
-            </Link>
+            </Link> 
+            <Link  to="/transfer"  className="font-bold text-blue-800 hover:text-blue-600" >Transfer</Link>
+          
+          </div>
           ) : (
             ""
           )}
